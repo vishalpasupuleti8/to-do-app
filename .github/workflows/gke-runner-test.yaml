@@ -1,0 +1,45 @@
+
+name: GKE Self Hosted Runner Test
+
+on:
+  push:
+    branches:
+      - feature/runner-test
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-gke-runner:
+    name: Test GKE Self Hosted Runner
+
+    runs-on: todo-app-runner
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Verify Self Hosted Runner
+        run: |
+          echo "=================================="
+          echo "GKE SELF HOSTED RUNNER CONNECTED"
+          echo "=================================="
+          echo "Runner Name: $RUNNER_NAME"
+          echo "Runner OS: $RUNNER_OS"
+          echo "Runner Architecture: $RUNNER_ARCH"
+
+      - name: Verify Linux
+        run: |
+          uname -a
+          whoami
+          pwd
+
+      - name: Verify Git
+        run: git --version
+
+      - name: Verify Curl
+        run: curl --version
+
+      - name: Final Status
+        run: echo "Successfully executed on GKE self hosted runner!"
